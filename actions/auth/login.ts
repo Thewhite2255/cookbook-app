@@ -7,15 +7,15 @@ import { LoginSchema } from '@/schemas/auth'
 import { signIn } from '@/auth'
 import { DEFAULT_LOGIN_REDIRECT } from '@/routes'
 import { AuthError } from 'next-auth'
-import { getUserByEmail } from '@/data/user'
+import { getUserByEmail } from '@/data/auth/user'
 import {
   generateVerificationToken,
   generateTwoFactorToken,
-} from '@/data/tokens'
+} from '@/data/auth/tokens'
 import { sendVerificationEmail, sendTwoFactorTokenEmail } from '@/lib/mail'
-import { getTwoFactorConfirmationByUserId } from '@/data/two-factor-confirmation'
+import { getTwoFactorConfirmationByUserId } from '@/data/auth/two-factor-confirmation'
 import { db } from '@/lib/db'
-import { getTwoFactorTokenByEmail } from '@/data/two-factor-token'
+import { getTwoFactorTokenByEmail } from '@/data/auth/two-factor-token'
 
 export const login = async (
   values: z.infer<typeof LoginSchema>,
@@ -40,10 +40,10 @@ export const login = async (
       existingUser.email
     )
 
-    //await sendVerificationEmail(
-    //  verificationToken.email,
-    //  verificationToken.token
-    //)
+    await sendVerificationEmail(
+      verificationToken.email,
+      verificationToken.token
+    )
 
     return { success: 'Confirmation email sent!' }
   }
@@ -100,7 +100,7 @@ export const login = async (
     } else {
       const twoFactorToken = await generateTwoFactorToken(existingUser.email)
 
-      //await sendTwoFactorTokenEmail(existingUser.email, twoFactorToken.token)
+      await sendTwoFactorTokenEmail(existingUser.email, twoFactorToken.token)
 
       return { twoFactor: true }
     }

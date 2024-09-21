@@ -5,8 +5,8 @@ import bcrypt from 'bcryptjs'
 
 import { RegisterSchema } from '@/schemas/auth'
 import { db } from '@/lib/db'
-import { getUserByEmail } from '@/data/user'
-import { generateVerificationToken } from '@/data/tokens'
+import { getUserByEmail } from '@/data/auth/user'
+import { generateVerificationToken } from '@/data/auth/tokens'
 import { sendVerificationEmail } from '@/lib/mail'
 
 export const register = async (values: z.infer<typeof RegisterSchema>) => {

@@ -1,36 +1,71 @@
 import { Resend } from 'resend'
 
 const resend = new Resend(process.env.RESEND_API_KEY)
-
 const domain = process.env.NEXT_PUBLIC_APP_URL
+
+const generateEmailTemplate = (title: string, message: string) => `
+  <!DOCTYPE html>
+  <html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>${title}</title>
+  </head>
+  <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
+    <table style="max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #ddd; border-radius: 10px;">
+      <tr>
+        <td style="text-align: center;">
+          <h2 style="color: #007bff;">${title}</h2>
+        </td>
+      </tr>
+      <tr>
+        <td style="padding: 10px 0;">
+          ${message}
+        </td>
+      </tr>
+      <tr>
+        <td style="padding-top: 20px; text-align: center; color: #666;">
+          <p>Thank you for using our service,<br>The Security Team</p>
+        </td>
+      </tr>
+    </table>
+  </body>
+  </html>
+`
 
 export const sendPasswordResetEmail = async (email: string, token: string) => {
   const confirmLink = `${domain}/auth/new-password?token=${token}`
-
+  const message = `<p>Click <a href="${confirmLink}">here</a> to reset password.</p>`
   await resend.emails.send({
     from: 'onboarding@resend.dev',
     to: email,
     subject: 'Reset your password',
-    html: `<p>Click <a href="${confirmLink}">here</a> to reset password.</p>`,
+    html: generateEmailTemplate('Reset your password', message),
   })
 }
 
 export const sendTwoFactorTokenEmail = async (email: string, token: string) => {
+  const message = `
+    <p>Hello,</p>
+    <p>Your verification code to access your account is:</p>
+    <p style="font-size: 24px; font-weight: bold; color: #007bff;">${token}</p>
+    <p>This code is valid for the next 5 minutes. If you did not request this code, please ignore this email.</p>
+  `
   await resend.emails.send({
     from: 'onboarding@resend.dev',
     to: email,
     subject: '2FA Code',
-    html: `<p>Your 2FA code : ${token}`,
+    html: generateEmailTemplate('Your 2FA Verification Code', message),
   })
 }
 
 export const sendVerificationEmail = async (email: string, token: string) => {
   const confirmLink = `${domain}/auth/new-verification?token=${token}`
-
+  const message = `<p>Click <a href="${confirmLink}">here</a> to confirm your email.</p>`
   await resend.emails.send({
     from: 'onboarding@resend.dev',
     to: email,
     subject: 'Confirm your email',
-    html: `<p>Click <a href="${confirmLink}">here</a> to confirm email.</p>`,
+    html: generateEmailTemplate('Confirm your email', message),
   })
 }

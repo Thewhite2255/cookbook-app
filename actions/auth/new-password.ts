@@ -7,10 +7,10 @@ import { NewPasswordSchema } from '@/schemas/auth'
 import { signIn } from '@/auth'
 import { DEFAULT_LOGIN_REDIRECT } from '@/routes'
 import { AuthError } from 'next-auth'
-import { getUserByEmail } from '@/data/user'
-import { generateVerificationToken } from '@/data/tokens'
+import { getUserByEmail } from '@/data/auth/user'
+import { generateVerificationToken } from '@/data/auth/tokens'
 import { sendPasswordResetEmail } from '@/lib/mail'
-import { getPasswordTokenByToken } from '@/data/password-reset-token'
+import { getPasswordTokenByToken } from '@/data/auth/password-reset-token'
 import { db } from '@/lib/db'
 
 export const newPassword = async (

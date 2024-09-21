@@ -4,9 +4,9 @@ import * as z from 'zod'
 import bcrypt from 'bcryptjs'
 
 import { SettingsSchema } from '@/schemas/auth'
-import { getUserByEmail, getUserById } from '@/data/user'
+import { getUserByEmail, getUserById } from '@/data/auth/user'
 import { db } from '@/lib/db'
-import { generateVerificationToken } from '@/data/tokens'
+import { generateVerificationToken } from '@/data/auth/tokens'
 import { sendVerificationEmail } from '@/lib/mail'
 import { currentUser } from '@/lib/auth'
 
