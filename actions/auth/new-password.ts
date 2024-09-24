@@ -10,7 +10,7 @@ import { AuthError } from 'next-auth'
 import { getUserByEmail } from '@/data/auth/user'
 import { generateVerificationToken } from '@/data/auth/tokens'
 import { sendPasswordResetEmail } from '@/lib/mail'
-import { getPasswordTokenByToken } from '@/data/auth/password-reset-token'
+import { getPasswordResetTokenByToken } from '@/data/auth/password-reset-token'
 import { db } from '@/lib/db'
 
 export const newPassword = async (
@@ -30,7 +30,7 @@ export const newPassword = async (
   const { password } = validateFields.data
   const hashedPassword = await bcrypt.hash(password, 10)
 
-  const existingToken = await getPasswordTokenByToken(token)
+  const existingToken = await getPasswordResetTokenByToken(token)
 
   if (!existingToken) {
     return { error: 'Invalid token!' }

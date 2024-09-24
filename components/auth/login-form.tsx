@@ -32,8 +32,6 @@ const LoginForm = () => {
       ? 'Email already in use with different provider!'
       : ''
 
-  console.log(callbackUrl)
-
   const [showTwoFactor, setShowTwoFactor] = useState(false)
   const [error, setError] = useState<string | undefined>('')
   const [success, setSuccess] = useState<string | undefined>('')
@@ -73,6 +71,7 @@ const LoginForm = () => {
 
   return (
     <CardWrapper
+      headerTitle="Sign In"
       headerLabel={
         showTwoFactor
           ? `We’ve sent a verification code to your email. Please enter the code to proceed.`
@@ -94,11 +93,7 @@ const LoginForm = () => {
                     <FormItem>
                       <FormLabel>Two Factor Code</FormLabel>
                       <FormControl>
-                        <Input
-                          {...field}
-                          disabled={isPending}
-                          placeholder="123456"
-                        />
+                        <Input {...field} disabled={isPending} />
                       </FormControl>
                       <Button
                         size="sm"
@@ -122,12 +117,7 @@ const LoginForm = () => {
                     <FormItem>
                       <FormLabel>Email</FormLabel>
                       <FormControl>
-                        <Input
-                          {...field}
-                          type="email"
-                          disabled={isPending}
-                          placeholder="john.doe@example.com"
-                        />
+                        <Input {...field} type="email" disabled={isPending} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -138,23 +128,26 @@ const LoginForm = () => {
                   name="password"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Password</FormLabel>
+                      <div className="flex items-center justify-between">
+                        <FormLabel>Password</FormLabel>
+                        <Button
+                          size="sm"
+                          variant="link"
+                          asChild
+                          className="px-0 font-normal"
+                        >
+                          <Link href="/auth/reset-password">
+                            Forgot password
+                          </Link>
+                        </Button>
+                      </div>
                       <FormControl>
                         <Input
                           {...field}
                           type="password"
                           disabled={isPending}
-                          placeholder="******"
                         />
                       </FormControl>
-                      <Button
-                        size="sm"
-                        variant="link"
-                        asChild
-                        className="px-0 font-normal"
-                      >
-                        <Link href="/auth/reset">Forgot password</Link>
-                      </Button>
                       <FormMessage />
                     </FormItem>
                   )}
@@ -166,7 +159,7 @@ const LoginForm = () => {
           <FormSuccess message={success} />
           <div>
             <Button type="submit" disabled={isPending} className="w-full">
-              {showTwoFactor ? 'Confirm' : 'Login'}
+              {showTwoFactor ? 'Confirm' : 'Sign in'}
             </Button>
           </div>
         </form>

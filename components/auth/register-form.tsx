@@ -50,6 +50,7 @@ const RegisterForm = () => {
 
   return (
     <CardWrapper
+      headerTitle="Sign Up"
       headerLabel="Create a account"
       backButtonLabel="Already have an account?"
       backButtonHref="/auth/login"
@@ -65,11 +66,7 @@ const RegisterForm = () => {
                 <FormItem>
                   <FormLabel>Name</FormLabel>
                   <FormControl>
-                    <Input
-                      {...field}
-                      disabled={isPending}
-                      placeholder="john doe"
-                    />
+                    <Input {...field} disabled={isPending} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -82,12 +79,7 @@ const RegisterForm = () => {
                 <FormItem>
                   <FormLabel>Email</FormLabel>
                   <FormControl>
-                    <Input
-                      {...field}
-                      type="email"
-                      disabled={isPending}
-                      placeholder="john.doe@example.com"
-                    />
+                    <Input {...field} type="email" disabled={isPending} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -100,12 +92,7 @@ const RegisterForm = () => {
                 <FormItem>
                   <FormLabel>Password</FormLabel>
                   <FormControl>
-                    <Input
-                      {...field}
-                      type="password"
-                      disabled={isPending}
-                      placeholder="******"
-                    />
+                    <Input {...field} type="password" disabled={isPending} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -116,7 +103,7 @@ const RegisterForm = () => {
           <FormSuccess message={success} />
           <div>
             <Button type="submit" disabled={isPending} className="w-full">
-              Register
+              Sign up
             </Button>
           </div>
         </form>

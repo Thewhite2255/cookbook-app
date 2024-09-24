@@ -5,7 +5,7 @@ import * as z from 'zod'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 
-import { ResetSchema } from '@/schemas/auth'
+import { ResetPasswordSchema } from '@/schemas/auth'
 import {
   Form,
   FormControl,
@@ -19,11 +19,11 @@ import CardWrapper from '@/components/auth/card-wrapper'
 import { Button } from '@/components/ui/button'
 import FormError from '@/components/form-error'
 import FormSuccess from '@/components/form-success'
-import { reset } from '@/actions/auth/reset'
+import { resetPassword } from '@/actions/auth/reset-password'
 import { useState, useTransition } from 'react'
 import { useSearchParams } from 'next/navigation'
 
-const ResetForm = () => {
+const ResetPasswordForm = () => {
   const searchParams = useSearchParams()
   const urlError =
     searchParams.get('error') === 'OAuthAccountNotLinked'
@@ -34,19 +34,19 @@ const ResetForm = () => {
   const [error, setError] = useState<string | undefined>('')
   const [success, setSuccess] = useState<string | undefined>('')
 
-  const form = useForm<z.infer<typeof ResetSchema>>({
-    resolver: zodResolver(ResetSchema),
+  const form = useForm<z.infer<typeof ResetPasswordSchema>>({
+    resolver: zodResolver(ResetPasswordSchema),
     defaultValues: {
       email: '',
     },
   })
 
-  const handleSubmit = (values: z.infer<typeof ResetSchema>) => {
+  const handleSubmit = (values: z.infer<typeof ResetPasswordSchema>) => {
     setError('')
     setSuccess('')
 
     startTransition(() => {
-      reset(values).then((data) => {
+      resetPassword(values).then((data) => {
         setError(data?.error)
         setSuccess(data?.success)
       })
@@ -55,6 +55,7 @@ const ResetForm = () => {
 
   return (
     <CardWrapper
+      headerTitle="Reset Password"
       headerLabel="Forgot your password"
       backButtonLabel="Back to login"
       backButtonHref="/auth/login"
@@ -69,12 +70,7 @@ const ResetForm = () => {
                 <FormItem>
                   <FormLabel>Email</FormLabel>
                   <FormControl>
-                    <Input
-                      {...field}
-                      type="email"
-                      disabled={isPending}
-                      placeholder="john.doe@example.com"
-                    />
+                    <Input {...field} type="email" disabled={isPending} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -94,4 +90,4 @@ const ResetForm = () => {
   )
 }
 
-export default ResetForm
+export default ResetPasswordForm

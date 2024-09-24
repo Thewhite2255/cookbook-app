@@ -2,7 +2,7 @@ import { db } from '@/lib/db'
 import { v4 as uuidv4 } from 'uuid'
 import crypto from 'crypto'
 import { getVerificationTokenByEmail } from '@/data/auth/verification-token'
-import { getPasswordTokenByEmail } from '@/data/auth/password-reset-token'
+import { getPasswordResetTokenByEmail } from '@/data/auth/password-reset-token'
 import { getTwoFactorTokenByEmail } from './two-factor-token'
 
 export const generateTwoFactorToken = async (email: string) => {
@@ -31,11 +31,11 @@ export const generateTwoFactorToken = async (email: string) => {
   return twoFactorToken
 }
 
-export const generatePasswordToken = async (email: string) => {
+export const generatePasswordResetToken = async (email: string) => {
   const token = uuidv4()
   const expires = new Date(new Date().getTime() + 3600 * 1000)
 
-  const existingToken = await getPasswordTokenByEmail(email)
+  const existingToken = await getPasswordResetTokenByEmail(email)
 
   if (existingToken) {
     await db.passwordResetToken.delete({

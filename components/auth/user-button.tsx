@@ -7,6 +7,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar'
+import { Separator } from '@/components/ui/separator'
 import { FaUser } from 'react-icons/fa'
 import useCurrentUser from '@/hooks/use-current-user'
 import LogoutButton from './logout-button'
@@ -28,10 +29,11 @@ const UserButton = () => {
         </Avatar>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-[220px]" align="end">
-        <DropdownMenuItem className="flex flex-col items-start">
+        <div className="flex flex-col items-start relative cursor-default select-none rounded-sm px-2 py-1.5 text-sm outline-none">
           <h3 className="text-sm font-semibold">{user?.name}</h3>
           <p className="truncate max-w-[210px]">{user?.email}</p>
-        </DropdownMenuItem>
+        </div>
+        <Separator className="mb-1" />
         <Link href="/settings">
           <DropdownMenuItem className="flex gap-2">
             <MdOutlineSettings className="h-5 w-5" />
