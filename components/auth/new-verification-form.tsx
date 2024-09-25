@@ -40,6 +40,7 @@ const NewVerificationForm = () => {
 
   return (
     <CardWrapper
+      headerTitle="Email Verification"
       headerLabel="Confirming your verification"
       backButtonLabel="Back to login"
       backButtonHref="/auth/login"
