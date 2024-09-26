@@ -69,11 +69,6 @@ export const settings = async (values: z.infer<typeof SettingsSchema>) => {
     },
     data: {
       ...values,
-      //name: values.name,
-      //email: values.email,
-      //password: values.password,
-      //role: values.role,
-      //isTwoFactorEnabled: values.isTwoFactorEnabled,
     },
   })
 

@@ -23,6 +23,7 @@ import { login } from '@/actions/auth/login'
 import { useState, useTransition } from 'react'
 import { useSearchParams } from 'next/navigation'
 import Link from 'next/link'
+import { MdOutlineVisibility, MdOutlineVisibilityOff } from 'react-icons/md'
 
 const LoginForm = () => {
   const searchParams = useSearchParams()
@@ -33,6 +34,7 @@ const LoginForm = () => {
       : ''
 
   const [showTwoFactor, setShowTwoFactor] = useState(false)
+  const [showPassword, setShowPassword] = useState(false)
   const [error, setError] = useState<string | undefined>('')
   const [success, setSuccess] = useState<string | undefined>('')
   const [isPending, startTransition] = useTransition()
@@ -45,6 +47,10 @@ const LoginForm = () => {
       code: '',
     },
   })
+
+  const handleShowPassword = () => {
+    setShowPassword((prev) => !prev)
+  }
 
   const handleSubmit = (values: z.infer<typeof LoginSchema>) => {
     setError('')
@@ -142,11 +148,29 @@ const LoginForm = () => {
                         </Button>
                       </div>
                       <FormControl>
-                        <Input
-                          {...field}
-                          type="password"
-                          disabled={isPending}
-                        />
+                        <div className="relative">
+                          <Input
+                            {...field}
+                            type={showPassword ? 'text' : 'password'}
+                            disabled={isPending}
+                            className="pr-10"
+                          />
+                          <div className="absolute inset-y-0 right-0 flex items-center justify-center p-3">
+                            <Button
+                              size="sm"
+                              variant={null}
+                              asChild
+                              onClick={handleShowPassword}
+                              className="px-0 font-normal cursor-pointer"
+                            >
+                              {showPassword ? (
+                                <MdOutlineVisibilityOff className="w-5 h-5" />
+                              ) : (
+                                <MdOutlineVisibility className="w-5 h-5" />
+                              )}
+                            </Button>
+                          </div>
+                        </div>
                       </FormControl>
                       <FormMessage />
                     </FormItem>

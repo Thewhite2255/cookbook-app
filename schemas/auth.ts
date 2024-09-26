@@ -1,4 +1,5 @@
 import { UserRole } from '@prisma/client'
+import { verify } from 'crypto'
 import * as z from 'zod'
 
 export const LoginSchema = z.object({
@@ -71,3 +72,35 @@ export const ResetPasswordSchema = z.object({
     message: 'Email is required',
   }),
 })
+
+export const AccountSchema = z
+  .object({
+    email: z.string().email(),
+    verifyTyping: z.string().min(1),
+  })
+  .refine(
+    (data) => {
+      if (data.email && !data.verifyTyping) {
+        return false
+      }
+
+      return true
+    },
+    {
+      message: 'Typing is required',
+      path: ['verifyTyping'],
+    }
+  )
+  .refine(
+    (data) => {
+      if (data.verifyTyping && !data.email) {
+        return false
+      }
+
+      return true
+    },
+    {
+      message: 'Email is required',
+      path: ['email'],
+    }
+  )
