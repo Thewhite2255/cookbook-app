@@ -11,9 +11,7 @@ const LogoutButton = ({ children }: LogoutButtonProps) => {
   const router = useRouter()
 
   const handleClick = () => {
-    logout().then(() => {
-      router.push('/auth/login')
-    })
+    logout()
   }
 
   return (

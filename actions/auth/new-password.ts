@@ -4,12 +4,7 @@ import * as z from 'zod'
 import bcrypt from 'bcryptjs'
 
 import { NewPasswordSchema } from '@/schemas/auth'
-import { signIn } from '@/auth'
-import { DEFAULT_LOGIN_REDIRECT } from '@/routes'
-import { AuthError } from 'next-auth'
 import { getUserByEmail } from '@/data/auth/user'
-import { generateVerificationToken } from '@/data/auth/tokens'
-import { sendPasswordResetEmail } from '@/lib/mail'
 import { getPasswordResetTokenByToken } from '@/data/auth/password-reset-token'
 import { db } from '@/lib/db'
 

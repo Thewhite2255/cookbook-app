@@ -4,7 +4,7 @@ import * as z from 'zod'
 
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { AccountSchema } from '@/schemas/auth'
+import { DeleteAccountSchema } from '@/schemas/auth'
 import { useState, useTransition } from 'react'
 
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog'
@@ -25,24 +25,21 @@ import {
 } from '@/components/ui/form'
 import { deleteAccount } from '@/actions/auth/delete-account'
 import { logout } from '@/actions/auth/logout'
-import { useRouter } from 'next/navigation'
 
 const DeleteAccountForm = () => {
   const [error, setError] = useState<string | undefined>('')
   const [success, setSuccess] = useState<string | undefined>('')
   const [isPending, startTransition] = useTransition()
 
-  const router = useRouter()
-
-  const form = useForm<z.infer<typeof AccountSchema>>({
-    resolver: zodResolver(AccountSchema),
+  const form = useForm<z.infer<typeof DeleteAccountSchema>>({
+    resolver: zodResolver(DeleteAccountSchema),
     defaultValues: {
       email: undefined,
-      verifyTyping: undefined,
+      confirmation: undefined,
     },
   })
 
-  const handleSubmit = (values: z.infer<typeof AccountSchema>) => {
+  const handleSubmit = (values: z.infer<typeof DeleteAccountSchema>) => {
     setError('')
     setSuccess('')
 
@@ -54,10 +51,7 @@ const DeleteAccountForm = () => {
           }
 
           if (data?.success) {
-            setSuccess(data?.success)
-            logout().then(() => {
-              router.push('/auth/login')
-            })
+            logout()
           }
         })
         .catch(() => setError('Something went wrong!'))
@@ -77,7 +71,7 @@ const DeleteAccountForm = () => {
             <Header title="Delete Account" />
           </CardHeader>
           <CardContent className="space-y-4">
-            <div>We will immediately delete all of your account</div>
+            <div>We will immediately delete your account.</div>
             <FormError message="This action is not reversible. Please be certain." />
           </CardContent>
           <Separator />
@@ -103,7 +97,7 @@ const DeleteAccountForm = () => {
                   />
                   <FormField
                     control={form.control}
-                    name="verifyTyping"
+                    name="confirmation"
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel>

@@ -73,34 +73,11 @@ export const ResetPasswordSchema = z.object({
   }),
 })
 
-export const AccountSchema = z
-  .object({
-    email: z.string().email(),
-    verifyTyping: z.string().min(1),
-  })
-  .refine(
-    (data) => {
-      if (data.email && !data.verifyTyping) {
-        return false
-      }
-
-      return true
-    },
-    {
-      message: 'Typing is required',
-      path: ['verifyTyping'],
-    }
-  )
-  .refine(
-    (data) => {
-      if (data.verifyTyping && !data.email) {
-        return false
-      }
-
-      return true
-    },
-    {
-      message: 'Email is required',
-      path: ['email'],
-    }
-  )
+export const DeleteAccountSchema = z.object({
+  email: z.string().email({
+    message: 'Email is required',
+  }),
+  confirmation: z.string().refine((value) => value === 'delete my account', {
+    message: "You must type 'delete my account' to confirm",
+  }),
+})

@@ -41,10 +41,6 @@ import {
 import { UserRole } from '@prisma/client'
 import { Switch } from '@/components/ui/switch'
 import { MdOutlineVisibility, MdOutlineVisibilityOff } from 'react-icons/md'
-import { Dialog } from '@radix-ui/react-dialog'
-import { DialogContent, DialogTrigger } from '@/components/ui/dialog'
-import Header from '@/components/auth/header'
-import { Separator } from '@/components/ui/separator'
 import DeleteAccountForm from '@/components/auth/delete-account-form'
 
 const SettingsPage = () => {
@@ -98,8 +94,8 @@ const SettingsPage = () => {
   }
 
   return (
-    <div className="space-y-8">
-      <Card className="w-[600px] shadow-md">
+    <div className="mx-auto max-w-xl">
+      <Card>
         <CardHeader>
           <p className="text-xl font-semibold">Settings</p>
         </CardHeader>
@@ -235,9 +231,11 @@ const SettingsPage = () => {
                         onValueChange={field.onChange}
                         defaultValue={field.value}
                       >
-                        <SelectTrigger>
-                          <SelectValue placeholder="Select a role" />
-                        </SelectTrigger>
+                        <FormControl>
+                          <SelectTrigger>
+                            <SelectValue placeholder="Select a role" />
+                          </SelectTrigger>
+                        </FormControl>
                         <SelectContent>
                           <SelectItem value={UserRole.USER}>User</SelectItem>
                           <SelectItem value={UserRole.ADMIN}>Admin</SelectItem>
@@ -280,7 +278,7 @@ const SettingsPage = () => {
           </Form>
         </CardContent>
       </Card>
-      <Card className="w-[600px] shadow-md border-red-100 overflow-hidden">
+      <Card className="mt-6 border-red-100 overflow-hidden">
         <CardHeader>
           <p className="text-xl font-semibold">Delete Account</p>
           <CardDescription>

@@ -2,12 +2,14 @@
 
 import * as z from 'zod'
 
-import { AccountSchema } from '@/schemas/auth'
+import { DeleteAccountSchema } from '@/schemas/auth'
 import { db } from '@/lib/db'
 import { getUserById } from '@/data/auth/user'
 import { currentUser } from '@/lib/auth'
 
-export const deleteAccount = async (values: z.infer<typeof AccountSchema>) => {
+export const deleteAccount = async (
+  values: z.infer<typeof DeleteAccountSchema>
+) => {
   const user = await currentUser()
 
   if (!user) {
@@ -20,22 +22,18 @@ export const deleteAccount = async (values: z.infer<typeof AccountSchema>) => {
     return { error: 'Unauthorized!' }
   }
 
-  const validateFields = AccountSchema.safeParse(values)
+  const validateFields = DeleteAccountSchema.safeParse(values)
 
   if (!validateFields.success) {
     return { error: 'Invalid fields!' }
   }
 
-  const { email, verifyTyping } = validateFields.data
+  const { email } = validateFields.data
 
   if (email && dbUser) {
     if (email !== dbUser.email) {
       return { error: 'Incorrect Email!' }
     }
-  }
-
-  if (verifyTyping && verifyTyping.toLowerCase() !== 'delete my account') {
-    return { error: 'Typing did not match "delete my account"' }
   }
 
   await db.user.delete({

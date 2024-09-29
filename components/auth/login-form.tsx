@@ -155,21 +155,24 @@ const LoginForm = () => {
                             disabled={isPending}
                             className="pr-10"
                           />
-                          <div className="absolute inset-y-0 right-0 flex items-center justify-center p-3">
-                            <Button
-                              size="sm"
-                              variant={null}
-                              asChild
-                              onClick={handleShowPassword}
-                              className="px-0 font-normal cursor-pointer"
-                            >
-                              {showPassword ? (
-                                <MdOutlineVisibilityOff className="w-5 h-5" />
-                              ) : (
-                                <MdOutlineVisibility className="w-5 h-5" />
-                              )}
-                            </Button>
-                          </div>
+                          {form.getValues().password !== undefined &&
+                            form.getValues().password !== '' && (
+                              <div className="absolute inset-y-0 right-0 flex items-center justify-center p-3">
+                                <Button
+                                  size="sm"
+                                  variant={null}
+                                  asChild
+                                  onClick={handleShowPassword}
+                                  className="px-0 font-normal cursor-pointer"
+                                >
+                                  {showPassword ? (
+                                    <MdOutlineVisibilityOff className="w-5 h-5" />
+                                  ) : (
+                                    <MdOutlineVisibility className="w-5 h-5" />
+                                  )}
+                                </Button>
+                              </div>
+                            )}
                         </div>
                       </FormControl>
                       <FormMessage />
