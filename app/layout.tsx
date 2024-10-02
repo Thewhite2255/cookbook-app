@@ -3,6 +3,10 @@ import localFont from 'next/font/local'
 import './globals.css'
 import Providers from '@/components/Providers'
 import { SiteConfig } from '@/lib/site-config'
+import { SessionProvider } from 'next-auth/react'
+import { auth } from '@/auth'
+import { ThemeProvider } from 'next-themes'
+import { Toaster } from 'sonner'
 
 const geistSans = localFont({
   src: './fonts/GeistVF.woff',
@@ -20,15 +24,18 @@ export const metadata: Metadata = {
   description: SiteConfig.description,
 }
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode
 }>) {
+  const session = await auth()
+
   return (
     <html lang="en">
       <body>
-        <Providers>{children}</Providers>
+        <Toaster />
+        <SessionProvider session={session}>{children}</SessionProvider>
       </body>
     </html>
   )

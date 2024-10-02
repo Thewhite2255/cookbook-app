@@ -12,8 +12,10 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
+import { useSession } from 'next-auth/react'
 
 const Navbar = () => {
+  const session = useSession()
   const pathname = usePathname()
 
   return (
@@ -39,29 +41,34 @@ const Navbar = () => {
           </Link>
         </DropdownMenuContent>
       </DropdownMenu>
-      <div className="flex gap-x-2 max-sm:hidden">
-        <Button
-          asChild
-          variant={pathname === '/server' ? 'default' : 'outline'}
-        >
-          <Link href="/server">Server</Link>
-        </Button>
-        <Button
-          asChild
-          variant={pathname === '/client' ? 'default' : 'outline'}
-        >
-          <Link href="/client">Client</Link>
-        </Button>
-        <Button asChild variant={pathname === '/admin' ? 'default' : 'outline'}>
-          <Link href="/admin">Admin</Link>
-        </Button>
-        <Button
-          asChild
-          variant={pathname === '/settings' ? 'default' : 'outline'}
-        >
-          <Link href="/settings">Settings</Link>
-        </Button>
-      </div>
+      {session.status === 'authenticated' && (
+        <div className="flex gap-x-2 max-sm:hidden">
+          <Button
+            asChild
+            variant={pathname === '/server' ? 'default' : 'outline'}
+          >
+            <Link href="/server">Server</Link>
+          </Button>
+          <Button
+            asChild
+            variant={pathname === '/client' ? 'default' : 'outline'}
+          >
+            <Link href="/client">Client</Link>
+          </Button>
+          <Button
+            asChild
+            variant={pathname === '/admin' ? 'default' : 'outline'}
+          >
+            <Link href="/admin">Admin</Link>
+          </Button>
+          <Button
+            asChild
+            variant={pathname === '/settings' ? 'default' : 'outline'}
+          >
+            <Link href="/settings">Settings</Link>
+          </Button>
+        </div>
+      )}
       <UserButton />
     </nav>
   )

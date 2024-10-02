@@ -8,7 +8,7 @@ import Social from '@/components/auth/social'
 interface CardWrapperProps {
   children: React.ReactNode
   headerLabel: string
-  headerTitle?: string
+  headerTitle: string
   backButtonLabel: string
   backButtonHref: string
   showSocial?: boolean
@@ -29,13 +29,13 @@ const CardWrapper = ({
       </CardHeader>
       <CardContent>{children}</CardContent>
       {showSocial && (
-        <CardFooter className="flex flex-col gap-y-6">
+        <CardFooter className="flex items-start flex-col gap-y-6">
           <div className="flex items-center w-full">
             <div className="border-t border-gray-300 flex-grow"></div>
-            <span className="mx-4 text-sm text-gray-500">OU</span>
+            <span className="mx-4 text-sm text-gray-500">OR</span>
             <div className="border-t border-gray-300 flex-grow"></div>
           </div>
-          <Social />
+          <Social label={headerTitle} />
         </CardFooter>
       )}
       <CardFooter>

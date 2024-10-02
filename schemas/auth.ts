@@ -1,5 +1,4 @@
 import { UserRole } from '@prisma/client'
-import { verify } from 'crypto'
 import * as z from 'zod'
 
 export const LoginSchema = z.object({
@@ -26,8 +25,16 @@ export const RegisterSchema = z.object({
 
 export const SettingsSchema = z
   .object({
-    name: z.optional(z.string()),
-    email: z.optional(z.string().email()),
+    name: z.optional(
+      z.string().min(1, {
+        message: 'Name is required',
+      })
+    ),
+    email: z.optional(
+      z.string().email({
+        message: 'Email is required',
+      })
+    ),
     role: z.enum([UserRole.ADMIN, UserRole.USER]),
     isTwoFactorEnabled: z.optional(z.boolean()),
     password: z.optional(z.string().min(6)),
@@ -42,7 +49,7 @@ export const SettingsSchema = z
       return true
     },
     {
-      message: 'New password is required!',
+      message: 'New password is required',
       path: ['newPassword'],
     }
   )
@@ -56,7 +63,7 @@ export const SettingsSchema = z
     },
 
     {
-      message: 'Password is required!',
+      message: 'Password is required',
       path: ['password'],
     }
   )
@@ -78,6 +85,6 @@ export const DeleteAccountSchema = z.object({
     message: 'Email is required',
   }),
   confirmation: z.string().refine((value) => value === 'delete my account', {
-    message: "You must type 'delete my account' to confirm",
+    message: "You must type 'delete my account' to verify",
   }),
 })
