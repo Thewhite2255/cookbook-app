@@ -27,6 +27,9 @@ const Navbar = () => {
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent className="w-[220px]" align="start">
+          <Link href="/">
+            <DropdownMenuItem className="flex gap-2">Home</DropdownMenuItem>
+          </Link>
           <Link href="/server">
             <DropdownMenuItem className="flex gap-2">Server</DropdownMenuItem>
           </Link>
@@ -43,6 +46,9 @@ const Navbar = () => {
       </DropdownMenu>
       {session.status === 'authenticated' && (
         <div className="flex gap-x-2 max-sm:hidden">
+          <Button asChild variant={pathname === '/' ? 'default' : 'outline'}>
+            <Link href="/">Home</Link>
+          </Button>
           <Button
             asChild
             variant={pathname === '/server' ? 'default' : 'outline'}
