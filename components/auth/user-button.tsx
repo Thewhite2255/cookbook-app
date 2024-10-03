@@ -12,14 +12,17 @@ import { FaUser } from 'react-icons/fa'
 import useCurrentUser from '@/hooks/use-current-user'
 import LogoutButton from './logout-button'
 
-import { MdOutlineLogout, MdOutlineSettings } from 'react-icons/md'
+import {
+  MdOutlineLogin,
+  MdOutlineLogout,
+  MdOutlinePersonAdd,
+  MdOutlineSettings,
+} from 'react-icons/md'
 import Link from 'next/link'
-import { useSession } from 'next-auth/react'
 
 const UserButton = () => {
   const user = useCurrentUser()
-  const session = useSession()
-  const isAuthentificated = session?.status === 'authenticated' ? true : false
+  const isAuthentificated = user
 
   return (
     <DropdownMenu>
@@ -56,13 +59,13 @@ const UserButton = () => {
         <DropdownMenuContent className="w-[220px]" align="end">
           <Link href="/auth/login">
             <DropdownMenuItem className="flex gap-2">
-              <MdOutlineSettings className="h-5 w-5" />
+              <MdOutlineLogin className="h-5 w-5" />
               Sign in
             </DropdownMenuItem>
           </Link>
           <Link href="/auth/register">
             <DropdownMenuItem className="flex gap-2">
-              <MdOutlineSettings className="h-5 w-5" />
+              <MdOutlinePersonAdd className="h-5 w-5" />
               Sign up
             </DropdownMenuItem>
           </Link>
