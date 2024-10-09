@@ -12,29 +12,23 @@ import { FaUser } from 'react-icons/fa'
 import useCurrentUser from '@/hooks/use-current-user'
 import LogoutButton from './logout-button'
 
-import {
-  MdOutlineLogin,
-  MdOutlineLogout,
-  MdOutlinePersonAdd,
-  MdOutlineSettings,
-} from 'react-icons/md'
+import { MdOutlineLogout, MdOutlineSettings } from 'react-icons/md'
 import Link from 'next/link'
 
 const UserButton = () => {
   const user = useCurrentUser()
-  const isAuthentificated = user
 
   return (
-    <DropdownMenu>
-      <DropdownMenuTrigger>
-        <Avatar>
-          <AvatarImage src={user?.image || ''} />
-          <AvatarFallback className="bg-sky-500">
-            <FaUser className="text-white" />
-          </AvatarFallback>
-        </Avatar>
-      </DropdownMenuTrigger>
-      {isAuthentificated && (
+    user && (
+      <DropdownMenu>
+        <DropdownMenuTrigger>
+          <Avatar>
+            <AvatarImage src={user?.image || ''} />
+            <AvatarFallback className="bg-sky-500">
+              <FaUser className="text-white" />
+            </AvatarFallback>
+          </Avatar>
+        </DropdownMenuTrigger>
         <DropdownMenuContent className="w-[220px]" align="end">
           <div className="flex flex-col items-start relative cursor-default select-none rounded-sm px-2 py-1.5 text-sm outline-none">
             <h3 className="text-sm font-semibold">{user?.name}</h3>
@@ -54,24 +48,8 @@ const UserButton = () => {
             </DropdownMenuItem>
           </LogoutButton>
         </DropdownMenuContent>
-      )}
-      {!isAuthentificated && (
-        <DropdownMenuContent className="w-[220px]" align="end">
-          <Link href="/auth/login">
-            <DropdownMenuItem className="flex gap-2">
-              <MdOutlineLogin className="h-5 w-5" />
-              Sign in
-            </DropdownMenuItem>
-          </Link>
-          <Link href="/auth/register">
-            <DropdownMenuItem className="flex gap-2">
-              <MdOutlinePersonAdd className="h-5 w-5" />
-              Sign up
-            </DropdownMenuItem>
-          </Link>
-        </DropdownMenuContent>
-      )}
-    </DropdownMenu>
+      </DropdownMenu>
+    )
   )
 }
 
