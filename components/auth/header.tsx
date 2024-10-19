@@ -7,7 +7,7 @@ interface HeaderProps {
 
 const Header = ({ title, label }: HeaderProps) => {
   return (
-    <div className="w-full flex flex-col gap-y-4 items-center justify-center">
+    <div className="w-full flex flex-col">
       <h1 className={cn('text-xl font-semibold')}>{title}</h1>
       <p className="text-sm text-muted-foreground">{label}</p>
     </div>

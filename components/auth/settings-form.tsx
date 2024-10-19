@@ -43,6 +43,7 @@ import { Switch } from '@/components/ui/switch'
 import { MdOutlineVisibility, MdOutlineVisibilityOff } from 'react-icons/md'
 import DeleteAccountForm from '@/components/auth/delete-account-form'
 import { ExtendedUser } from '@/next-auth'
+import MenuDrawer from '../menu-drawer'
 
 interface SettingsFormProps {
   user?: ExtendedUser
@@ -98,7 +99,7 @@ const SettingsForm = ({ user }: SettingsFormProps) => {
   }
 
   return (
-    <div className="mx-auto max-w-xl">
+    <div>
       <Card>
         <CardHeader>
           <p className="text-xl font-semibold">Settings</p>

@@ -22,6 +22,7 @@ model User {
   Authenticator         Authenticator[]
   sessions              Session[]
   twoFactorConfirmation TwoFactorConfirmation?
+  recipes               Recipe[]               @relation("UserRecipes")
 }
 
 model Account {
@@ -102,4 +103,17 @@ model Authenticator {
 enum UserRole {
   ADMIN
   USER
+}
+
+model Recipe {
+  id          String   @id @default(cuid())
+  title       String
+  description String
+  ingredients String[]
+  setps       String[]
+  image       String?
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], name: "UserRecipes")
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }

@@ -7,10 +7,21 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { DeleteAccountSchema } from '@/schemas/auth'
 import { useState, useTransition } from 'react'
 
-import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog'
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogTrigger,
+} from '@/components/ui/dialog'
 import Header from '@/components/auth/header'
 import { Separator } from '@/components/ui/separator'
-import { Card, CardContent, CardHeader } from '@/components/ui/card'
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card'
 import FormError from '@/components/form-error'
 import FormSuccess from '@/components/form-success'
 import { Button } from '@/components/ui/button'
@@ -68,10 +79,12 @@ const DeleteAccountForm = () => {
       <DialogContent className="p-0 w-auto border-none bg-transparent">
         <Card className="w-[400px] overflow-hidden">
           <CardHeader>
-            <Header title="Delete Account" />
+            <CardTitle>Delete Account</CardTitle>
+            <CardDescription>
+              We will immediately delete your account.
+            </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
-            <div>We will immediately delete your account.</div>
             <FormError message="This action is not reversible. Please be certain." />
           </CardContent>
           <Separator />
@@ -115,10 +128,20 @@ const DeleteAccountForm = () => {
                 </div>
                 <FormError message={error} />
                 <FormSuccess message={success} />
-                <div>
+                <div className="space-y-2">
                   <Button type="submit" disabled={isPending} className="w-full">
                     Delete
                   </Button>
+                  <DialogClose className="w-full">
+                    <Button
+                      type="button"
+                      variant="outline"
+                      disabled={isPending}
+                      className="w-full"
+                    >
+                      Cancel
+                    </Button>
+                  </DialogClose>
                 </div>
               </form>
             </Form>
