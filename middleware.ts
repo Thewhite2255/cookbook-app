@@ -10,7 +10,8 @@ import {
 import { NextResponse } from 'next/server'
 
 const { auth } = NextAuth(authConfig)
-export default auth(async function middleware(req) {
+
+export default auth((req) => {
   const { nextUrl } = req
   const isLoggedIn = !!req.auth
 

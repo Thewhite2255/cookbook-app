@@ -21,7 +21,7 @@ import FormError from '@/components/form-error'
 import FormSuccess from '@/components/form-success'
 import { register } from '@/actions/auth/register'
 import { useState, useTransition } from 'react'
-import { MdOutlineVisibility, MdOutlineVisibilityOff } from 'react-icons/md'
+import { Eye, EyeOff } from 'lucide-react'
 
 const RegisterForm = () => {
   const [isPending, startTransition] = useTransition()
@@ -116,9 +116,9 @@ const RegisterForm = () => {
                               className="px-0 font-normal cursor-pointer"
                             >
                               {showPassword ? (
-                                <MdOutlineVisibilityOff className="w-5 h-5" />
+                                <EyeOff className="w-5 h-5" />
                               ) : (
-                                <MdOutlineVisibility className="w-5 h-5" />
+                                <Eye className="w-5 h-5" />
                               )}
                             </Button>
                           </div>

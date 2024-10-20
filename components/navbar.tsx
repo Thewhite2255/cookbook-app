@@ -1,5 +1,3 @@
-'use client'
-
 import { MdOutlineLogin } from 'react-icons/md'
 import UserButton from '@/components/auth/user-button'
 import { Button } from '@/components/ui/button'
@@ -7,10 +5,10 @@ import LoginButton from './auth/login-button'
 import Link from 'next/link'
 import { navbarItems } from '@/constants'
 import { Menu } from 'lucide-react'
-import useCurrentUser from '@/hooks/use-current-user'
+import { currentUser } from '@/lib/auth'
 
-const Navbar = () => {
-  const user = useCurrentUser()
+const Navbar = async () => {
+  const user = await currentUser()
 
   return (
     <header className="bg-white sticky top-0 z-[50]">

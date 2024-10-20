@@ -20,7 +20,6 @@ import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
 } from '@/components/ui/card'
 import { settings } from '@/actions/auth/settings'
@@ -30,7 +29,6 @@ import { useState, useTransition } from 'react'
 import FormError from '@/components/form-error'
 import FormSuccess from '@/components/form-success'
 import { SettingsSchema } from '@/schemas/auth'
-import useCurrentUser from '@/hooks/use-current-user'
 import {
   Select,
   SelectContent,
@@ -40,10 +38,9 @@ import {
 } from '@/components/ui/select'
 import { UserRole } from '@prisma/client'
 import { Switch } from '@/components/ui/switch'
-import { MdOutlineVisibility, MdOutlineVisibilityOff } from 'react-icons/md'
+import { Eye, EyeOff } from 'lucide-react'
 import DeleteAccountForm from '@/components/auth/delete-account-form'
 import { ExtendedUser } from '@/next-auth'
-import MenuDrawer from '../menu-drawer'
 
 interface SettingsFormProps {
   user?: ExtendedUser
@@ -172,9 +169,9 @@ const SettingsForm = ({ user }: SettingsFormProps) => {
                                       className="px-0 font-normal cursor-pointer"
                                     >
                                       {showPassword ? (
-                                        <MdOutlineVisibilityOff className="w-5 h-5" />
+                                        <EyeOff className="w-5 h-5" />
                                       ) : (
-                                        <MdOutlineVisibility className="w-5 h-5" />
+                                        <Eye className="w-5 h-5" />
                                       )}
                                     </Button>
                                   </div>
@@ -210,9 +207,9 @@ const SettingsForm = ({ user }: SettingsFormProps) => {
                                       className="px-0 font-normal cursor-pointer"
                                     >
                                       {showNewPassword ? (
-                                        <MdOutlineVisibilityOff className="w-5 h-5" />
+                                        <EyeOff className="w-5 h-5" />
                                       ) : (
-                                        <MdOutlineVisibility className="w-5 h-5" />
+                                        <Eye className="w-5 h-5" />
                                       )}
                                     </Button>
                                   </div>

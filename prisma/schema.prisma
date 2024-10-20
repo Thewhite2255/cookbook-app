@@ -23,6 +23,9 @@ model User {
   sessions              Session[]
   twoFactorConfirmation TwoFactorConfirmation?
   recipes               Recipe[]               @relation("UserRecipes")
+  likes                 Like[]
+  comments              Comment[]
+  Ratings               Rating[]
 }
 
 model Account {
@@ -106,14 +109,51 @@ enum UserRole {
 }
 
 model Recipe {
-  id          String   @id @default(cuid())
+  id          String    @id @default(cuid())
   title       String
+  slug        String
   description String
   ingredients String[]
-  setps       String[]
+  steps       String[]
   image       String?
+  favorite    Boolean   @default(false)
   userId      String
-  user        User     @relation(fields: [userId], references: [id], name: "UserRecipes")
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  user        User      @relation(fields: [userId], references: [id], name: "UserRecipes")
+  likes       Like[]    @relation("RecipeLikes") // Relation pour les likes
+  comments    Comment[] @relation("RecipeComments") // Relation pour les commentaires
+  ratings     Rating[]  @relation("RecipeRatings") // Relation pour les notations
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+model Like {
+  id        String   @id @default(cuid())
+  recipeId  String
+  userId    String
+  recipe    Recipe   @relation(name: "RecipeLikes", fields: [recipeId], references: [id])
+  user      User     @relation(fields: [userId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Comment {
+  id        String   @id @default(cuid())
+  recipeId  String
+  userId    String
+  content   String
+  recipe    Recipe   @relation(name: "RecipeComments", fields: [recipeId], references: [id])
+  user      User     @relation(fields: [userId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Rating {
+  id        String   @id @default(cuid())
+  recipeId  String
+  userId    String
+  value     Int
+  recipe    Recipe   @relation(name: "RecipeRatings", fields: [recipeId], references: [id])
+  user      User     @relation(fields: [userId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }

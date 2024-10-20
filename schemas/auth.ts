@@ -85,6 +85,6 @@ export const DeleteAccountSchema = z.object({
     message: 'Email is required',
   }),
   confirmation: z.string().refine((value) => value === 'delete my account', {
-    message: "You must type 'delete my account' to verify",
+    message: "You must type 'delete my account' to confirm",
   }),
 })

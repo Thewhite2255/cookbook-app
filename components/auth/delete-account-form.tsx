@@ -13,7 +13,6 @@ import {
   DialogContent,
   DialogTrigger,
 } from '@/components/ui/dialog'
-import Header from '@/components/auth/header'
 import { Separator } from '@/components/ui/separator'
 import {
   Card,
@@ -114,7 +113,7 @@ const DeleteAccountForm = () => {
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel>
-                          To verify, type{' '}
+                          To confirm, type{' '}
                           <span className="font-bold">delete my account</span>{' '}
                           below
                         </FormLabel>
@@ -128,7 +127,7 @@ const DeleteAccountForm = () => {
                 </div>
                 <FormError message={error} />
                 <FormSuccess message={success} />
-                <div className="space-y-2">
+                <div className="space-y-3">
                   <Button type="submit" disabled={isPending} className="w-full">
                     Delete
                   </Button>

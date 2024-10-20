@@ -23,7 +23,7 @@ import { login } from '@/actions/auth/login'
 import { useState, useTransition } from 'react'
 import { useSearchParams } from 'next/navigation'
 import Link from 'next/link'
-import { MdOutlineVisibility, MdOutlineVisibilityOff } from 'react-icons/md'
+import { Eye, EyeOff } from 'lucide-react'
 
 const LoginForm = () => {
   const searchParams = useSearchParams()
@@ -106,7 +106,7 @@ const LoginForm = () => {
                         variant="link"
                         className="px-0 font-normal"
                       >
-                        Didn't receive the code?
+                        Didn{"'"}t receive the code?
                       </Button>
                       <FormMessage />
                     </FormItem>
@@ -166,9 +166,9 @@ const LoginForm = () => {
                                   className="px-0 font-normal cursor-pointer"
                                 >
                                   {showPassword ? (
-                                    <MdOutlineVisibilityOff className="w-5 h-5" />
+                                    <EyeOff className="w-5 h-5" />
                                   ) : (
-                                    <MdOutlineVisibility className="w-5 h-5" />
+                                    <Eye className="w-5 h-5" />
                                   )}
                                 </Button>
                               </div>

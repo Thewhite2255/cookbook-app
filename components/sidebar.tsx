@@ -8,7 +8,7 @@ const Sidebar = () => {
   const pathname = usePathname()
 
   return (
-    <aside className="sticky inset-y-0 left-0 border-r flex justify-center wrapper">
+    <aside className="sticky inset-y-0 left-0 border-r flex justify-center px-4 py-6">
       <ul className="space-y-2">
         {dashboardItems.length > 0 &&
           dashboardItems.map((item) => (
