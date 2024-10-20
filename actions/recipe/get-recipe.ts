@@ -2,9 +2,9 @@
 
 import { currentUser } from '@/lib/auth'
 import { getUserById } from '@/data/auth/user'
-import { getAllRecipes } from '@/data/recipe/recipe'
+import { getRecipeById } from '@/data/recipe/recipe'
 
-export const getRecipes = async () => {
+export const getRecipe = async (slug: string) => {
   const user = await currentUser()
 
   if (!user) {
@@ -17,7 +17,9 @@ export const getRecipes = async () => {
     return { error: 'Unauthorized!' }
   }
 
-  const recipes = await getAllRecipes()
+  const id = slug.split('-').splice(-1)[0]
 
-  return { recipes }
+  const recipe = await getRecipeById(id as string)
+
+  return { recipe }
 }

@@ -2,9 +2,9 @@
 
 import { currentUser } from '@/lib/auth'
 import { getUserById } from '@/data/auth/user'
-import { getAllRecipes } from '@/data/recipe/recipe'
+import { getPopularRecipes } from '@/data/recipe/recipe'
 
-export const getRecipes = async () => {
+export const getAllPopularRecipes = async () => {
   const user = await currentUser()
 
   if (!user) {
@@ -17,7 +17,7 @@ export const getRecipes = async () => {
     return { error: 'Unauthorized!' }
   }
 
-  const recipes = await getAllRecipes()
+  const recipes = await getPopularRecipes()
 
   return { recipes }
 }

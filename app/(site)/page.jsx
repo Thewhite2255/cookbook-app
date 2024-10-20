@@ -1,7 +1,7 @@
-import CategorySection from '@/components/sections/category-section'
+import CategoriesSection from '@/components/sections/categories-section'
 import HeroSection from '@/components/sections/hero-section'
-import NewRecipesSection from '@/components/sections/new-recipe-section'
-import PopularRecipesSection from '@/components/sections/popularRecipes'
+import NewRecipesSection from '@/components/sections/new-recipes-section'
+import PopularRecipesSection from '@/components/sections/popular-recipes-section'
 
 const HomePage = () => {
   return (
@@ -9,7 +9,7 @@ const HomePage = () => {
       <HeroSection />
       <PopularRecipesSection />
       <NewRecipesSection />
-      <CategorySection />
+      <CategoriesSection />
     </section>
   )
 }

@@ -5,58 +5,72 @@ import Image from 'next/image'
 import { Heart, Star, ThumbsUp } from 'lucide-react'
 import Link from 'next/link'
 import { useParams } from 'next/navigation'
-import { getRecipe } from '@/actions/recipe/get-recipe'
-import { calculateAverageRating } from '@/data/recipe/recipe'
-import { RecipeType } from '@/constants'
+import useGetRecipe from '@/hooks/use-get-recipe'
+
+interface Rating {
+  userId: string // ID of the user who gave the rating
+  rating: number // Rating from 1 to 5
+}
+
+interface Comment {
+  userId: string // ID of the user who commented
+  text: string // Comment text
+}
+
+interface Recipe {
+  title: string // Recipe title
+  description: string // Recipe description
+  image: string // Recipe image URL
+  slug: string // Recipe slug for the URL
+  ratings: Rating[] // Array of ratings
+  favorite: boolean // Indicates if the recipe is marked as favorite
+  likes: number // Number of likes
+  comments: Comment[] // Array of comments
+}
 
 const RecipePage = () => {
   const { slug } = useParams()
+  const id = slug.split('-')[1]
+  const { recipe: recipeData } = useGetRecipe(id)
+  console.log(recipeData)
 
-  const [recipe, setRecipe] = useState<RecipeType | null>(null)
-  const [loading, setLoading] = useState(true)
+  const [recipe, setRecipe] = useState<Recipe | null>(
+    (recipeData && recipeData) || null
+  )
+  const [loading, setLoading] = useState(false)
   const [commentText, setCommentText] = useState('')
 
-  const averageRating = calculateAverageRating(recipe?.ratings || [])
+  // Fetch recipe data based on slug
+  useEffect(() => {}, [slug])
 
-  useEffect(() => {
-    const fetchRecipe = async () => {
-      try {
-        const data = await getRecipe(slug)
-        setRecipe(data?.recipe)
-      } catch (error) {
-        console.error('Something went wrong!', error)
-      } finally {
-        setLoading(false)
-      }
-    }
-
-    fetchRecipe()
-  }, [slug])
-
+  // Handle like button click
   const handleLike = () => {
     if (recipe) {
+      // Increment likes logic here
       setRecipe({ ...recipe, likes: recipe.likes + 1 })
     }
   }
 
+  // Handle favorite button click
   const handleFavorite = () => {
     if (recipe) {
       setRecipe({ ...recipe, favorite: !recipe.favorite })
     }
   }
 
+  // Handle comment submission
   const handleCommentSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    if (recipe && commentText.trim()) {
+    if (recipe && commentText) {
       const newComment = {
-        userId: 'currentUserId', // Remplace par l'ID utilisateur actuel
-        text: commentText.trim(),
+        userId: 'currentUserId', // Replace with actual user ID
+        text: commentText,
       }
       setRecipe({
         ...recipe,
         comments: [...recipe.comments, newComment],
       })
-      setCommentText('')
+      setCommentText('') // Clear the comment input
     }
   }
 
@@ -82,12 +96,14 @@ const RecipePage = () => {
               <Star
                 key={index}
                 className={`w-5 h-5 ${
-                  averageRating > index ? 'text-yellow-500' : 'text-gray-300'
+                  index < recipe.ratings[0]?.rating
+                    ? 'text-yellow-500'
+                    : 'text-gray-300'
                 }`}
               />
             ))}
             <span className="ml-2 text-gray-700">
-              {averageRating.toFixed(2)} / 5
+              {recipe.ratings[0]?.rating || '0'} / 5
             </span>
           </div>
 
@@ -97,9 +113,7 @@ const RecipePage = () => {
               className="flex items-center text-gray-700 hover:text-blue-500 transition duration-200"
             >
               <ThumbsUp className="w-5 h-5" />
-              <span className="ml-1">
-                {recipe.likes ? recipe.likes.length : 0}
-              </span>
+              <span className="ml-1">{recipe.likes}</span>
             </button>
             <button
               onClick={handleFavorite}
@@ -130,16 +144,12 @@ const RecipePage = () => {
               </button>
             </form>
             <div className="mt-4">
-              {recipe.comments?.length > 0 ? (
-                recipe.comments.map((comment, index) => (
-                  <div key={index} className="mt-2 border-b pb-2">
-                    <p className="font-semibold">User {comment.userId}</p>
-                    <p className="text-gray-600">{comment.text}</p>
-                  </div>
-                ))
-              ) : (
-                <p>No comments yet.</p>
-              )}
+              {recipe.comments.map((comment, index) => (
+                <div key={index} className="mt-2 border-b pb-2">
+                  <p className="font-semibold">User {comment.userId}</p>
+                  <p className="text-gray-600">{comment.text}</p>
+                </div>
+              ))}
             </div>
           </div>
         </>

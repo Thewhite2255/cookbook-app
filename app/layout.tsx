@@ -20,6 +20,8 @@ const geistMono = localFont({
 export const metadata: Metadata = {
   title: SiteConfig.title,
   description: SiteConfig.description,
+  keywords: [...SiteConfig.keywords],
+  authors: [...SiteConfig.authors],
 }
 
 export default async function RootLayout({

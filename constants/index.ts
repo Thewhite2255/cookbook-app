@@ -106,7 +106,7 @@ export const recipesData = [
     updatedAt: '2024-10-17T10:12:30Z',
     likes: 65,
     ratings: [
-      { userId: 'user1', rating: 5 },
+      { userId: 'user1', rating: 2 },
       { userId: 'user2', rating: 4 },
     ],
     comments: [
@@ -117,12 +117,12 @@ export const recipesData = [
   },
 ]
 
-interface Rating {
+export type RatingRecipeType = {
   userId: string
   rating: number
 }
 
-interface Comment {
+export type CommentRecipeType = {
   userId: string
   text: string
 }
@@ -133,10 +133,10 @@ export type RecipeType = {
   slug: string
   description: string
   image: string
-  ratings: Rating[]
+  ratings: RatingRecipeType[]
   favorite: boolean
   likes: number
-  comments: Comment[]
+  comments: CommentRecipeType[]
 }
 
 export const navbarItems = [

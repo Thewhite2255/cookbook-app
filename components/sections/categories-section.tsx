@@ -1,16 +1,20 @@
-import { recipesData } from '@/constants'
+'use client'
+
+import useGetNewRecipes from '@/hooks/use-get-new-recipes'
 import RecipeList from './recipe-list'
 
-const CategorySection = () => {
+const CategoriesSection = () => {
+  const { recipes } = useGetNewRecipes()
+
   return (
     <section className="wrapper">
       <RecipeList
         title="Categories"
         description="Explore our recipe categories: from savory to sweet, there's something for everyone!"
-        list={recipesData}
+        list={recipes}
       />
     </section>
   )
 }
 
-export default CategorySection
+export default CategoriesSection

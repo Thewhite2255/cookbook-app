@@ -27,7 +27,7 @@ import { Eye, EyeOff } from 'lucide-react'
 
 const LoginForm = () => {
   const searchParams = useSearchParams()
-  const callbackUrl = searchParams.get('callbackUrl') || undefined
+  const callbackUrl = searchParams.get('callback-url') || undefined
   const urlError =
     searchParams.get('error') === 'OAuthAccountNotLinked'
       ? 'Email already in use with different provider!'
