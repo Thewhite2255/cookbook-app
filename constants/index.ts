@@ -141,6 +141,29 @@ export type RecipeType = {
 
 export const navbarItems = [
   {
+    label: 'Recipes',
+    href: '/recipes',
+    Icon: BookOpen,
+  },
+  {
+    label: 'Categories',
+    href: '/categories',
+    Icon: Utensils,
+  },
+  {
+    label: 'Add recipe',
+    href: '/add-recipe',
+    Icon: Plus,
+  },
+  {
+    label: 'Favorite',
+    href: '/favorites',
+    Icon: Heart,
+  },
+]
+
+export const sidebarItems = [
+  {
     label: 'Home',
     href: '/',
     Icon: Home,

@@ -16,7 +16,7 @@ const RecipeCard = ({ recipe }: RecipeCardProps) => {
   return (
     <Link href={`/recipes/${recipe.slug}-${recipe.id}`}>
       <div className="relative cursor-pointer group/card bg-white shadow-md rounded-lg overflow-hidden transition-transform duration-300 transform hover:scale-105">
-        <div className="w-full h-[260px]">
+        <div className="w-full h-[240px]">
           <Image
             src="/images/good_meal.jpg" // Utilise l'image du recette
             alt={recipe.title}

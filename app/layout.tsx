@@ -5,6 +5,7 @@ import { SiteConfig } from '@/lib/site-config'
 import { SessionProvider } from 'next-auth/react'
 import { auth } from '@/auth'
 import { Toaster } from 'sonner'
+import { SidebarProvider } from '@/components/ui/sidebar'
 
 const geistSans = localFont({
   src: './fonts/GeistVF.woff',
@@ -35,7 +36,9 @@ export default async function RootLayout({
     <html lang="en">
       <body>
         <Toaster />
-        <SessionProvider session={session}>{children}</SessionProvider>
+        <SessionProvider session={session}>
+          <SidebarProvider>{children}</SidebarProvider>
+        </SessionProvider>
       </body>
     </html>
   )

@@ -1,3 +1,5 @@
+'use client'
+
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -10,15 +12,15 @@ import LogoutButton from './logout-button'
 import Link from 'next/link'
 import { LogOut, User } from 'lucide-react'
 import { userButtonItems } from '@/constants'
-import { currentUser } from '@/lib/auth'
+import useCurrentUser from '@/hooks/use-current-user'
 
-const UserButton = async () => {
-  const user = await currentUser()
+const UserButton = () => {
+  const user = useCurrentUser()
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger>
-        <Avatar>
+        <Avatar className="h-9 w-9">
           <AvatarImage src={user?.image || ''} />
           <AvatarFallback className="bg-blue-500">
             <User className="text-white" />
